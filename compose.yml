@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - ${MSGWSS_DATABASE_PORT:-5432}:5432
+    environment:
+      POSTGRES_USER: ${MSGWSS_DATABASE_USER}
+      POSTGRES_PASSWORD: ${MSGWSS_DATABASE_PASSWORD}
+      POSTGRES_DB: ${MSGWSS_DATABASE_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MSGWSS_DATABASE_USER} -d ${MSGWSS_DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - 8081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  db:
+    driver: local
+  pgadmin:
+    driver: local

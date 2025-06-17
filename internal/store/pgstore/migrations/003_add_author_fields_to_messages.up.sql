@@ -1,0 +1,3 @@
+ALTER TABLE messages
+    ADD COLUMN IF NOT EXISTS author_id TEXT NOT NULL DEFAULT 'guest',
+    ADD COLUMN IF NOT EXISTS author_name TEXT NOT NULL DEFAULT 'Guest';

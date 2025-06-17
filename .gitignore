@@ -1,0 +1,7 @@
+# IDEs / JetBrains
+.idea/
+# Arquivos de ambiente
+.env
+
+
+reset-db.sh
