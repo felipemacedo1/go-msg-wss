@@ -37,7 +37,7 @@ down:
 
 ## roda a aplicação
 run:
-	go run cmd/wsrs/main.go
+	go run cmd/msgwss/main.go
 
 ## checa o status dos containers
 ps:

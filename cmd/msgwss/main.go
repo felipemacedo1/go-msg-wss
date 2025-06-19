@@ -27,7 +27,7 @@ func main() {
 
 	log.Println("Connecting to the database...")
 	pool, err := pgxpool.New(ctx, fmt.Sprintf(
-		"user=%s password=%s host=%s port=%s dbname=%s",
+		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		os.Getenv("MSGWSS_DATABASE_USER"),
 		os.Getenv("MSGWSS_DATABASE_PASSWORD"),
 		os.Getenv("MSGWSS_DATABASE_HOST"),
@@ -52,7 +52,7 @@ func main() {
 
 	log.Println("Starting HTTP server on port 8080...")
 	go func() {
-		if err := http.ListenAndServe(":8080", handler); err != nil {
+		if err := http.ListenAndServe("0.0.0.0:8080", handler); err != nil {
 			if !errors.Is(err, http.ErrServerClosed) {
 				log.Fatalf("HTTP server error: %v", err)
 			}
